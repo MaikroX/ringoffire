@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { timeout } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-// import { AngularFirestore } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+
+interface Item {
+  name: string;
+}
 
 @Component({
   selector: 'app-game',
@@ -14,8 +18,12 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
   game: Game = new Game();
+  item$: Observable<Item[]>;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(firestore: Firestore, public dialog: MatDialog) {
+    const coll = collection(firestore, 'items');
+    this.item$ = collectionData(coll);
+  }
 
   ngOnInit(): void {
     this.newGame();
