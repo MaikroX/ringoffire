@@ -1,5 +1,3 @@
-import { idToken } from '@angular/fire/auth';
-
 export class Game {
   public players: string[] = [];
   public stack: string[] = [];
