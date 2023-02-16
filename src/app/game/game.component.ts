@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-
-interface Item {
-  name: string;
-}
+import { ActivatedRoute } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-game',
@@ -17,21 +13,34 @@ interface Item {
 export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
-  game: Game = new Game();
-  item$: Observable<Item[]>;
+  game: Game;
+  gameId: string;
 
-  constructor(firestore: Firestore, public dialog: MatDialog) {
-    const coll = collection(firestore, 'items');
-    this.item$ = collectionData(coll);
-  }
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private firestore: AngularFirestore
+  ) {}
 
   ngOnInit(): void {
     this.newGame();
+    this.route.params.subscribe((params) => {
+      console.log(params['id']);
+      this.gameId = params['id'];
+
+      this.firestore
+        .collection('games')
+        .doc(params['id'])
+        .valueChanges()
+        .subscribe((game: any) => {
+          console.log('Game update', game);
+        });
+    });
+    // });
   }
 
   newGame() {
     this.game = new Game();
-    console.log(this.game);
   }
 
   takeCard() {

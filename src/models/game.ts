@@ -1,3 +1,5 @@
+import { idToken } from '@angular/fire/auth';
+
 export class Game {
   public players: string[] = [];
   public stack: string[] = [];
@@ -12,6 +14,15 @@ export class Game {
       this.stack.push('diamonds_' + i);
     }
     shuffle(this.stack);
+  }
+
+  public toJSON() {
+    return {
+      players: this.players,
+      stack: this.stack,
+      playedCards: this.playedCards,
+      currentPlayer: this.currentPlayer,
+    };
   }
 }
 
