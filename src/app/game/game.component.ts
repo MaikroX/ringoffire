@@ -14,7 +14,7 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
   game: Game;
-  // gameId: string;
+  gameId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,13 +26,14 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.route.params.subscribe((params) => {
       console.log('GameId', params['id']);
-
+      this.gameId = params['id'];
       this.firestore
         .collection('games')
-        .doc(params['id'])
+        .doc(this.gameId)
         .valueChanges()
         .subscribe((game: any) => {
           console.log('Game update', game);
+
           this.game.currentPlayer = game.currentPlayer;
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
