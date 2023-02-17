@@ -11,8 +11,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
-  pickCardAnimation = false;
-  currentCard: string = '';
   game: Game;
   gameId: string;
 
@@ -38,6 +36,8 @@ export class GameComponent implements OnInit {
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
           this.game.stack = game.stack;
+          this.game.pickCardAnimation = game.pickCardAnimation;
+          this.game.currentCard = game.currentCard;
         });
     });
   }
@@ -47,22 +47,24 @@ export class GameComponent implements OnInit {
   }
 
   takeCard() {
-    if (!this.pickCardAnimation) {
+    if (!this.game.pickCardAnimation) {
       const card = this.game.stack.pop();
-      if (card) {
-        this.currentCard = card;
-        console.log(this.currentCard);
-        this.pickCardAnimation = true;
 
-        console.log('New Card: ' + this.currentCard);
+      if (card) {
+        this.game.currentCard = card;
+        console.log(this.game.currentCard);
+        this.game.pickCardAnimation = true;
+        this.saveGame();
+        console.log('New Card: ' + this.game.currentCard);
         console.log('Game ', this.game);
 
         this.game.currentPlayer++;
         this.game.currentPlayer =
           this.game.currentPlayer % this.game.players.length;
         setTimeout(() => {
-          this.game.playedCards.push(this.currentCard);
-          this.pickCardAnimation = false;
+          this.game.playedCards.push(this.game.currentCard);
+          this.game.pickCardAnimation = false;
+          this.saveGame();
         }, 1000);
       }
     }
@@ -74,7 +76,15 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.saveGame();
       }
     });
+  }
+
+  saveGame() {
+    this.firestore
+      .collection('games')
+      .doc(this.gameId)
+      .update(this.game.toJSON());
   }
 }

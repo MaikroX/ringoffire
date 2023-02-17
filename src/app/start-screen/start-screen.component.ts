@@ -15,13 +15,13 @@ export class StartScreenComponent implements OnInit {
 
   newGame() {
     // Start Game
-    // let game = new Game();
-    // this.firestore
-    //   .collection('games')
-    //   .add(game.toJSON())
-    //   .then((gameInfo: any) => {
-    //     console.log(gameInfo);
-    //   });
-    // this.router.navigateByUrl('/game');
+    let game = new Game();
+    this.firestore
+      .collection('games')
+      .add(game.toJSON())
+      .then((gameInfo: any) => {
+        // console.log('Gameinfo', gameInfo.id);
+        this.router.navigateByUrl('/game/' + gameInfo.id);
+      });
   }
 }
