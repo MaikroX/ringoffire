@@ -16,6 +16,20 @@
   }
 }
 
+.headline {
+  color: #e8b027;
+  position: absolute;
+  top: 75px;
+  font-size: 56px;
+  font-weight: bold;
+  background-color: #72452a8f;
+  padding: 8px;
+
+  @media (max-width: 280px) {
+    font-size: 48px;
+  }
+}
+
 .start-label-box {
   position: absolute;
   left: 0;
@@ -35,6 +49,28 @@
     &:hover {
       filter: brightness(1.11);
       cursor: pointer;
+    }
+  }
+
+  .start-button {
+    color: #e8b027;
+    position: absolute;
+    bottom: 40px;
+    font-size: 56px;
+    font-weight: bold;
+    background-color: #3434348f;
+
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    -webkit-box-shadow: 5px 6px 15px 2px rgba(0, 0, 0, 0.54);
+    box-shadow: 5px 6px 15px 2px rgba(0, 0, 0, 0.54);
+    border: solid 2px #e8b027;
+
+    &:hover {
+      background-color: #72452a8f;
+      -webkit-box-shadow: 5px 6px 15px 2px rgba(0, 0, 0, 0.74);
+      box-shadow: 5px 6px 15px 2px rgba(0, 0, 0, 0.74);
     }
   }
 }
