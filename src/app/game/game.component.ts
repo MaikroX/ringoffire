@@ -30,8 +30,6 @@ export class GameComponent implements OnInit {
         .doc(this.gameId)
         .valueChanges()
         .subscribe((game: any) => {
-          console.log('Game update', game);
-
           this.game.currentPlayer = game.currentPlayer;
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
@@ -49,15 +47,9 @@ export class GameComponent implements OnInit {
   takeCard() {
     if (!this.game.pickCardAnimation) {
       const card = this.game.stack.pop();
-
       if (card) {
         this.game.currentCard = card;
-        console.log(this.game.currentCard);
         this.game.pickCardAnimation = true;
-
-        console.log('New Card: ' + this.game.currentCard);
-        console.log('Game ', this.game);
-
         this.game.currentPlayer++;
         this.game.currentPlayer =
           this.game.currentPlayer % this.game.players.length;
