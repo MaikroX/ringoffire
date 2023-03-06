@@ -45,21 +45,25 @@ export class GameComponent implements OnInit {
   }
 
   takeCard() {
-    if (!this.game.pickCardAnimation) {
-      const card = this.game.stack.pop();
-      if (card) {
-        this.game.currentCard = card;
-        this.game.pickCardAnimation = true;
-        this.game.currentPlayer++;
-        this.game.currentPlayer =
-          this.game.currentPlayer % this.game.players.length;
-        this.saveGame();
-        setTimeout(() => {
-          this.game.playedCards.push(this.game.currentCard);
-          this.game.pickCardAnimation = false;
+    if (this.game.players.length >= 2) {
+      if (!this.game.pickCardAnimation) {
+        const card = this.game.stack.pop();
+        if (card) {
+          this.game.currentCard = card;
+          this.game.pickCardAnimation = true;
+          this.game.currentPlayer++;
+          this.game.currentPlayer =
+            this.game.currentPlayer % this.game.players.length;
           this.saveGame();
-        }, 1000);
+          setTimeout(() => {
+            this.game.playedCards.push(this.game.currentCard);
+            this.game.pickCardAnimation = false;
+            this.saveGame();
+          }, 1000);
+        }
       }
+    } else {
+      alert('Add at least 2 players');
     }
   }
 

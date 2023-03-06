@@ -52,6 +52,15 @@
   position: absolute;
   right: 32px;
   bottom: 32px;
+
+  @media (max-width: 720px) {
+    right: 12px;
+    bottom: 120px;
+  }
+  @media (max-width: 413px) {
+    right: 12px;
+    bottom: 130px;
+  }
 }
 
 .pin-bottom {

@@ -2,6 +2,9 @@
   padding-left: 16px;
 }
 
+.padding-bottom-4 {
+  padding-bottom: 4px !important;
+}
 mat-card {
   @media (max-width: 720px) {
     min-height: 100px;
