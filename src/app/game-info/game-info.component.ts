@@ -36,12 +36,12 @@ export class GameInfoComponent implements OnInit, OnChanges {
     },
     {
       title: 'Unlucky Round',
-      description: 'Don`t drink until it`s your turn again',
+      description: 'Don`t drink until it`s your turn again!',
     },
     { title: 'Men Men Men', description: 'All men drink.' },
     {
       title: 'Truth or dare',
-      description: 'Choose a player for truth or dare',
+      description: 'Choose a player for truth or dare.',
     },
     {
       title: 'Never have i ever ...',
